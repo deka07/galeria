@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import IMG from '../../assets/galeria-de-imagens.png'
 
 interface Album {
   id: number;
@@ -10,7 +11,7 @@ interface Album {
 const CreateAlbumPage: React.FC = () => {
   const navigate = useNavigate();
   const [albums, setAlbums] = useState<Album[]>([]);
-  const [newAlbum, setNewAlbum] = useState<Album>({ id: 0, name: '', image: 'caminho_da_imagem_padrao.jpg' });
+  const [newAlbum, setNewAlbum] = useState<Album>({ id: 0, name: '', image: IMG });
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewAlbum({ ...newAlbum, name: e.target.value });
@@ -18,7 +19,8 @@ const CreateAlbumPage: React.FC = () => {
 
   const handleCreateAlbum = () => {
     // Cria um novo álbum com um ID único
-    const createdAlbum: Album = { ...newAlbum, id: albums.length + 1 };
+    const createdAlbum: Album = { ...newAlbum, id: albums.length + 1};
+    
     
     // Adiciona o novo álbum à lista de álbuns
     setAlbums([...albums, createdAlbum]);
@@ -50,6 +52,7 @@ const CreateAlbumPage: React.FC = () => {
       <ul>
         {albums.map((album) => (
           <li key={album.id}>
+            <img src={album.image} alt="" />
             <button onClick={() => navigate(`/album/${encodeURIComponent(album.name)}`)}>
               {album.name}
             </button>
